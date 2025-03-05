@@ -868,10 +868,10 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
     val navigate = (audioStatusRepositoryBridge.audioRequest() == null
         && quranSettings.navigateWithVolumeKeys())
-    if (navigate && keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+    if (navigate && keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_PAGE_UP || keyCode == KeyEvent.KEYCODE_DPAD_UP) {
       viewPager.currentItem -= 1
       return true
-    } else if (navigate && keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+    } else if (navigate && keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_PAGE_DOWN || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
       viewPager.currentItem += 1
       return true
     }
@@ -880,7 +880,7 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
 
   override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
     return (((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
-        keyCode == KeyEvent.KEYCODE_VOLUME_UP) && (
+        keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_PAGE_DOWN || keyCode == KeyEvent.KEYCODE_PAGE_UP || keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) && (
         audioStatusRepositoryBridge.audioRequest() == null) &&
         PreferenceManager.getDefaultSharedPreferences(this)
           .getBoolean(Constants.PREF_USE_VOLUME_KEY_NAV, false))
